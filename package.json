@@ -1,0 +1,22 @@
+{
+    "name": "dino",
+    "version": "1.0.0",
+    "description": "Dinosaurs udacity nanodegree",
+    "main": "app.js",
+    "scripts": {
+        "start": "serve -s . -l 8080"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/elmasria/dino.git"
+    },
+    "author": "Ahmad EL Masri",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/elmasria/dino/issues"
+    },
+    "homepage": "https://github.com/elmasria/dino#readme",
+    "dependencies": {
+        "serve": "^11.3.2"
+    }
+}
