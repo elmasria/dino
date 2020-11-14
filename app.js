@@ -80,9 +80,9 @@
     Dino.prototype.compareWeight = function(weight, name) {
         let result = "Same weight";
         if (this.weight > weight) {
-            result = `${this.weight} lbs for ${this.name} is bigger than ${weight} lbs for ${name}`;
+            result = `${this.weight} lbs for ${this.species} is bigger than ${weight} lbs for ${name}`;
         } else if (this.weight < weight) {
-            result = `${weight} lbs for ${name} is bigger than ${this.weight} lbs for ${this.name}`;
+            result = `${weight} lbs for ${name} is bigger than ${this.weight} lbs for ${this.species}`;
         }
         this.facts.push(result);
     };
@@ -91,9 +91,9 @@
     Dino.prototype.compareHeight = function(height, name) {
         let result = "Same height.";
         if (this.height > height) {
-            result = `${this.height} inches for ${this.name} is bigger than ${height} inches for ${name}`;
+            result = `${this.height} inches for ${this.species} is bigger than ${height} inches for ${name}`;
         } else if (this.height < height) {
-            result = `${height} inches for ${name} is bigger than ${this.height} inches for ${this.name}`;
+            result = `${height} inches for ${name} is bigger than ${this.height} inches for ${this.species}`;
         }
         this.facts.push(result);
     };
