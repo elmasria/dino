@@ -1,9 +1,9 @@
 (async () => {
     /**
      * Returns the converted height in inches
-     * @param {float} hFeet - The height in feet
-     * @param {float} hInches - The height of the inches
-     * @returns {float} height - The height in inches
+     * @param {number} hFeet - The height in feet
+     * @param {number} hInches - The height of the inches
+     * @returns {number} height - The height in inches
      */
     function convertHeight (hFeet, hInches) {
         return (hFeet * 12) + hInches
@@ -53,9 +53,9 @@
     /**
      * Represents an Animal.
      * @constructor
-     * @param {species} title
-     * @param {float} weight
-     * @param {float} height
+     * @param {string} species
+     * @param {number} weight
+     * @param {number} height
      */
     function Animal (species, weight, height) {
         this.species = species
@@ -63,6 +63,10 @@
         this.height = height
     }
 
+    /**
+     * Returns image url
+     * @returns {string} image url
+     */
     Animal.prototype.getImage = function () {
         return `images/${this.species.toLowerCase()}.png`
     }
@@ -70,9 +74,9 @@
     /**
      * Represents an Dino.
      * @constructor
-     * @param {species} title
-     * @param {float} weight
-     * @param {float} height
+     * @param {string} species
+     * @param {number} weight
+     * @param {number} height
      * @param {string} diet
      * @param {string} where
      * @param {string} when
@@ -89,18 +93,27 @@
     Dino.prototype = Object.create(Animal.prototype)
     Dino.prototype.constructor = Dino
 
+    /** add facts to Dino Objects. */
     Dino.prototype.setFacts = function () {
         this.facts.push(`Species is ${this.species}.`)
         this.facts.push(`I was in ${this.when}.`)
         this.facts.push(`I am from ${this.where}.`)
     }
 
+    /**
+     * Returns a random fact
+     * @returns {string} a random fact
+     */
     Animal.prototype.getAFact = function () {
         const index = Math.floor(Math.random() * 10) % this.facts.length
         return this.facts[index]
     }
 
-    /** Create Dino Compare by name Method. */
+    /**
+     * Dino Compare by name Method.
+     * @constructor
+     * @param {string} name
+     */
     Dino.prototype.compareName = function (name) {
         let result = 'Same name weight!'
         if (this.name > name) {
@@ -111,7 +124,12 @@
         this.facts.push(result)
     }
 
-    /** Create Dino Compare by weight Method. */
+    /**
+     * Dino Compare by weight Method.
+     * @constructor
+     * @param {number} weight
+     * @param {string} name
+     */
     Dino.prototype.compareWeight = function (weight, name) {
         let result = 'Same weight'
         if (this.weight > weight) {
@@ -122,7 +140,12 @@
         this.facts.push(result)
     }
 
-    /** Create Dino Compare by height Method. */
+    /**
+     * Dino Compare by height Method.
+     * @constructor
+     * @param {number} height
+     * @param {string} name
+     */
     Dino.prototype.compareHeight = function (height, name) {
         let result = 'Same height.'
         if (this.height > height) {
@@ -144,9 +167,9 @@
     /**
      * Represents an Human.
      * @constructor
-     * @param {name} name
-     * @param {float} weight
-     * @param {float} height
+     * @param {string} name
+     * @param {number} weight
+     * @param {number} height
      */
     function Human (name, weight, height) {
         Animal.call(this, 'human', weight, height)
@@ -156,7 +179,10 @@
     Human.prototype = Object.create(Animal.prototype)
     Human.prototype.constructor = Human
 
-    /** Use IIFE to get human data from form. */
+    /**
+     * Return function to get human data from form
+     * @returns {function} function that will generate new human object
+     */
     function getHumanData () {
         return (function () {
             const name = getInputValue('name')
@@ -168,7 +194,10 @@
         })()
     }
 
-    /** Generate Tiles for each Dino in Array. */
+    /**
+     * Generate Tiles for each Dino in Array
+     * @param {Object} human
+     */
     function generateTileForDino (human) {
         dinos.forEach(dino => {
             dino.compareName(human.name)
@@ -177,6 +206,11 @@
         })
     }
 
+    /**
+     * Return fragment contains all tiles DOM elements
+     * @param {Object} human
+     * @returns {HTMLElement} fragment element div contains grid DOM elements
+     */
     function generateFragment (human) {
         const frag = document.createDocumentFragment()
         dinos.forEach((dino, i) => {
@@ -194,18 +228,17 @@
         return frag
     }
 
-    /** On button click, prepare and display infographic. */
     const btnCompare = document.getElementById('btn')
+
+    /** On button click, prepare and display infographic. */
     btnCompare.addEventListener('click', function () {
         const diGrid = document.getElementById('grid')
         const human = getHumanData()
         generateTileForDino(human)
 
-        // Add tiles to DOM
         const frag = generateFragment(human)
         diGrid.appendChild(frag)
 
-        // Remove form from screen
         document.getElementById('dino-compare').style.display = 'none'
     })
 })()
