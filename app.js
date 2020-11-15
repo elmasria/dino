@@ -1,12 +1,30 @@
 (async () => {
+    /**
+     * Returns the converted height in inches
+     * @param {float} hFeet - The height in feet
+     * @param {float} hInches - The height of the inches
+     * @returns {float} height - The height in inches
+     */
     function convertHeight (hFeet, hInches) {
         return (hFeet * 12) + hInches
-    };
+    }
 
+    /**
+     * Returns the DOM element value by id
+     * @param {string} elementId - The Elemnet id
+     * @returns {string} The Elemnet value
+     */
     function getInputValue (elementId) {
         return document.getElementById(elementId).value
     }
 
+    /**
+     * Returns the DOM element div contains grid elments
+     * @param {string} species
+     * @param {string} imageUrl
+     * @param {string} fact
+     * @returns {string} DOM element div contains grid elments
+     */
     function generateGridItem (species, imageUrl, fact) {
         const gridDiv = document.createElement('div')
         gridDiv.className = 'grid-item'
@@ -32,6 +50,13 @@
     const json = await response.json()
     let dinos = json.Dinos
 
+    /**
+     * Represents an Animal.
+     * @constructor
+     * @param {species} title
+     * @param {float} weight
+     * @param {float} height
+     */
     function Animal (species, weight, height) {
         this.species = species
         this.weight = weight
@@ -42,7 +67,17 @@
         return `images/${this.species.toLowerCase()}.png`
     }
 
-    // Create Dino Constructor
+    /**
+     * Represents an Dino.
+     * @constructor
+     * @param {species} title
+     * @param {float} weight
+     * @param {float} height
+     * @param {string} diet
+     * @param {string} where
+     * @param {string} when
+     * @param {string} fact
+     */
     function Dino (species, weight, height, diet, where, when, fact) {
         Animal.call(this, species, weight, height)
         this.diet = diet
@@ -65,7 +100,7 @@
         return this.facts[index]
     }
 
-    // Create Dino Compare by name Method
+    /** Create Dino Compare by name Method. */
     Dino.prototype.compareName = function (name) {
         let result = 'Same name weight!'
         if (this.name > name) {
@@ -76,7 +111,7 @@
         this.facts.push(result)
     }
 
-    // Create Dino Compareby weight Method
+    /** Create Dino Compare by weight Method. */
     Dino.prototype.compareWeight = function (weight, name) {
         let result = 'Same weight'
         if (this.weight > weight) {
@@ -87,7 +122,7 @@
         this.facts.push(result)
     }
 
-    // Create Dino Compare by height Method
+    /** Create Dino Compare by height Method. */
     Dino.prototype.compareHeight = function (height, name) {
         let result = 'Same height.'
         if (this.height > height) {
@@ -98,7 +133,7 @@
         this.facts.push(result)
     }
 
-    // Create Dino Objects
+    /** Create Dino Objects. */
     dinos = dinos.map((dino) => {
         const { species, weight, height, diet, where, when, fact } = dino
         const cDino = new Dino(species, weight, height, diet, where, when, fact)
@@ -106,7 +141,13 @@
         return cDino
     })
 
-    // Create Human Object
+    /**
+     * Represents an Human.
+     * @constructor
+     * @param {name} name
+     * @param {float} weight
+     * @param {float} height
+     */
     function Human (name, weight, height) {
         Animal.call(this, 'human', weight, height)
         this.name = name
@@ -115,7 +156,7 @@
     Human.prototype = Object.create(Animal.prototype)
     Human.prototype.constructor = Human
 
-    // Use IIFE to get human data from form
+    /** Use IIFE to get human data from form. */
     function getHumanData () {
         return (function () {
             const name = getInputValue('name')
@@ -127,7 +168,7 @@
         })()
     }
 
-    // Generate Tiles for each Dino in Array
+    /** Generate Tiles for each Dino in Array. */
     function generateTileForDino (human) {
         dinos.forEach(dino => {
             dino.compareName(human.name)
@@ -153,7 +194,7 @@
         return frag
     }
 
-    // On button click, prepare and display infographic
+    /** On button click, prepare and display infographic. */
     const btnCompare = document.getElementById('btn')
     btnCompare.addEventListener('click', function () {
         const diGrid = document.getElementById('grid')
